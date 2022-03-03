@@ -69,6 +69,7 @@ if __name__ == '__main__':
 
         # st.video('https://www.youtube.com/watch?v=coQ5dg8wM2o&list=PL3XmeqnUuMw5VFBpSLwF9uMOLvFkE4fds&index=1')
 
-
+        st.title('Connect')
+        st.write('[Twitter](https://twitter.com/AnhKTrinh)')
 
     
