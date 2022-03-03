@@ -1,20 +1,7 @@
 import streamlit as st
-import pickle
 import time
-import tensorflow as tf
-from pathlib import Path
+from utils import load_css, load_model, generate,read_markdown_file
 
-def load_model(path):
-    loaded_model = pickle.load(open(path, 'rb')) 
-    return loaded_model
-
-def read_markdown_file(markdown_file):
-    return Path(markdown_file).read_text()
-
-def generate(model,num_of_images):
-    sample = tf.random.normal(shape=(num_of_images, 100))
-    image = model(sample,training=False)
-    return image
 
 def show_image(num_of_images_to_create,model):
     model = load_model(model+'.pkl')
@@ -31,10 +18,6 @@ def create_slider():
 def select_model():
     model_list = ('128x128_dcgan_ada',)
     return st.selectbox('Generator model', options= model_list)
-
-def load_css(file_name):
-    with open(file_name) as f:
-        st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
 
 if __name__ == '__main__':
@@ -65,8 +48,6 @@ if __name__ == '__main__':
 
         intro_markdown = read_markdown_file("./readme.md")
         st.markdown(intro_markdown, unsafe_allow_html=True)
-
-        # st.video('https://www.youtube.com/watch?v=coQ5dg8wM2o&list=PL3XmeqnUuMw5VFBpSLwF9uMOLvFkE4fds&index=1')
 
         st.title('Connect')
         st.write('[Twitter](https://twitter.com/AnhKTrinh)')
