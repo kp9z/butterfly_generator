@@ -13,7 +13,6 @@ def read_markdown_file(markdown_file):
 
 def generate(model,num_of_images):
     sample = tf.random.normal(shape=(num_of_images, 100))
-
     image = model(sample,training=False)
     return image
 
@@ -23,11 +22,6 @@ def show_image(num_of_images_to_create,model):
     image_list = []
     for image in image_tensor:
         image_list.append(image.numpy())
-
-    # if 'image_list' not in st.session_state:
-    #     st.session_state['image_list'] = image_list
-    # else:
-    # st.session_state['image_list'] = image_list
         
     return image_list
 
@@ -38,9 +32,14 @@ def select_model():
     model_list = ('128x128_dcgan_ada',)
     return st.selectbox('Generator model', options= model_list)
 
+def load_css(file_name):
+    with open(file_name) as f:
+        st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+
 
 if __name__ == '__main__':
-    
+  
+    load_css("./assets/style.css")
     st.title('Butterfly generator')
     with st.form("my_form"):
         cols = st.columns(2)
