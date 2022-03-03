@@ -2,10 +2,14 @@ import streamlit as st
 import pickle
 import time
 import tensorflow as tf
+from pathlib import Path
 
 def load_model(path):
     loaded_model = pickle.load(open(path, 'rb')) 
     return loaded_model
+
+def read_markdown_file(markdown_file):
+    return Path(markdown_file).read_text()
 
 def generate(model,num_of_images):
     sample = tf.random.normal(shape=(num_of_images, 100))
@@ -23,7 +27,7 @@ def show_image(num_of_images_to_create,model):
     # if 'image_list' not in st.session_state:
     #     st.session_state['image_list'] = image_list
     # else:
-    st.session_state['image_list'] = image_list
+    # st.session_state['image_list'] = image_list
         
     return image_list
 
@@ -36,21 +40,34 @@ def select_model():
 
 
 if __name__ == '__main__':
-    t0 = time.time()
+    
     st.title('Butterfly generator')
+    with st.form("my_form"):
+        cols = st.columns(2)
+        with cols[0]:
+            image_to_create = create_slider()
+        with cols[1]:
+            selected_model = select_model()
 
+        submitted = st.form_submit_button("Generate")
+       
+    with st.container():
+         if submitted:
+            t0 = time.time()
+            image_list = show_image(image_to_create,selected_model)
+            st.image(image_list)
+            st.write(f'generated in {(time.time() - t0):.2f}s')
+    
     
     with st.container():
-    # print(image)
-        image_to_create = create_slider()
-        selected_model = select_model()
-      
-        st.button('Generate', on_click=show_image,args = [image_to_create,selected_model] )
-        st.write(f'total time {time.time() - t0}')
-    
-    if 'image_list' in st.session_state:
-        st.image(st.session_state['image_list'])
-    
+        st.title('The training')
+        st.write('After 600 epochs, took almost 10 hours with Google Colab Pro')
+        st.video('https://www.youtube.com/watch?v=3dvJhdYD04c')
+
+        intro_markdown = read_markdown_file("./readme.md")
+        st.markdown(intro_markdown, unsafe_allow_html=True)
+
+        # st.video('https://www.youtube.com/watch?v=coQ5dg8wM2o&list=PL3XmeqnUuMw5VFBpSLwF9uMOLvFkE4fds&index=1')
 
 
 
