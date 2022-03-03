@@ -14,34 +14,44 @@ def generate(model,num_of_images):
     return image
 
 def show_image(num_of_images_to_create,model):
-
     model = load_model(model+'.pkl')
     image_tensor = generate(model,num_of_images=num_of_images_to_create)
     image_list = []
     for image in image_tensor:
         image_list.append(image.numpy())
 
-    st.image(image_list)
+    # if 'image_list' not in st.session_state:
+    #     st.session_state['image_list'] = image_list
+    # else:
+    st.session_state['image_list'] = image_list
+        
     return image_list
 
 def create_slider():
-    return st.sidebar.slider('Images to generate', min_value=4, max_value=32)
+    return st.slider('Images to generate', min_value=4, max_value=32, value=8)
 
 def select_model():
     model_list = ('128x128_dcgan_ada',)
-    return st.sidebar.selectbox('Generator model', options= model_list)
+    return st.selectbox('Generator model', options= model_list)
 
 
 if __name__ == '__main__':
     t0 = time.time()
-    st.sidebar.title('Butterfly generator')
-   
-    # print(image)
-    image_to_create = create_slider()
-    selected_model = select_model()
+    st.title('Butterfly generator')
+
     
-    st.sidebar.button('Generate', on_click=show_image,args = [image_to_create,selected_model] )
-    st.sidebar.write(f'total time {time.time() - t0}')
+    with st.container():
+    # print(image)
+        image_to_create = create_slider()
+        selected_model = select_model()
+      
+        st.button('Generate', on_click=show_image,args = [image_to_create,selected_model] )
+        st.write(f'total time {time.time() - t0}')
+    
+    if 'image_list' in st.session_state:
+        st.image(st.session_state['image_list'])
+    
+
 
 
     
