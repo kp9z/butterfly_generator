@@ -1,6 +1,6 @@
 import streamlit as st
 import pickle
-import tensorflow as tf
+import numpy as np
 from pathlib import Path
 
 def load_css(file_name):
@@ -13,7 +13,9 @@ def load_model(path):
     return loaded_model
 
 def generate(model,num_of_images):
-    sample = tf.random.normal(shape=(num_of_images, 100))
+    # import numpy as np
+
+    sample = np.random.normal(size=(num_of_images,100))
     image = model(sample,training=False)
     return image
 
