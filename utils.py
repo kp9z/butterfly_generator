@@ -9,8 +9,8 @@ def load_css(file_name):
 
 @st.cache(allow_output_mutation=True)
 def load_model(path):
-    # with open(path,'rb') as f:
-    loaded_model = pickle.load(open(path,'rb') 
+    with open(path,'rb') as f:
+        loaded_model = pickle.load(f)
     return loaded_model
 
 def generate(model,num_of_images):
