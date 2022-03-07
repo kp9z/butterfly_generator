@@ -4,7 +4,7 @@ from utils import load_css, load_model, generate,read_markdown_file
 
 
 def show_image(num_of_images_to_create,model):
-    model = load_model(model+'.pkl')
+    model = load_model(DEFAULT_MODEL+'.pkl')
     image_tensor = generate(model,num_of_images=num_of_images_to_create)
     image_list = []
     for image in image_tensor:
@@ -26,6 +26,8 @@ if __name__ == '__main__':
 
     load_css("./assets/style.css")
     st.title('Butterfly generator')
+    # model = load_model(DEFAULT_MODEL+'.pkl')
+
     with st.form("my_form"):
         cols = st.columns(2)
         with cols[0]:
@@ -38,6 +40,7 @@ if __name__ == '__main__':
     with st.container():
         t0 = time.time()
         if submitted:
+            
             image_list = show_image(image_to_create,selected_model)            
         else: 
             image_list = show_image(DEFAULT_NO_OF_IMAGES,DEFAULT_MODEL)
