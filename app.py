@@ -13,7 +13,7 @@ def show_image(num_of_images_to_create,model):
     return image_list
 
 def create_slider():
-    return st.slider('Images to generate', min_value=4, max_value=32, value=8)
+    return st.slider('Images to generate', min_value=5, max_value=15, value=5)
 
 def select_model():
     model_list = ('128x128_dcgan_ada',)
