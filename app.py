@@ -21,7 +21,9 @@ def select_model():
 
 
 if __name__ == '__main__':
-  
+    DEFAULT_NO_OF_IMAGES = 5
+    DEFAULT_MODEL = '128x128_dcgan_ada'
+
     load_css("./assets/style.css")
     st.title('Butterfly generator')
     with st.form("my_form"):
@@ -34,11 +36,14 @@ if __name__ == '__main__':
         submitted = st.form_submit_button("Generate")
        
     with st.container():
-         if submitted:
-            t0 = time.time()
-            image_list = show_image(image_to_create,selected_model)
-            st.image(image_list)
-            st.write(f'generated in {(time.time() - t0):.2f}s')
+        t0 = time.time()
+        if submitted:
+            image_list = show_image(image_to_create,selected_model)            
+        else: 
+            image_list = show_image(DEFAULT_NO_OF_IMAGES,DEFAULT_MODEL)
+            
+        st.image(image_list)
+        st.write(f'generated in {(time.time() - t0):.2f}s')
     
     
     with st.container():
