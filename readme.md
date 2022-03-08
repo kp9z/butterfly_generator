@@ -13,4 +13,3 @@
     - User feedback
 - Non-esential ideas:
     - Web-speed
-    - SSL
